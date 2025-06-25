@@ -1,9 +1,10 @@
 import streamlit as st
 import vosk
-import pyaudio
 import json
 import threading
 import time
+import sounddevice as sd
+import queue
 
 # Path to your vosk model
 VOSK_MODEL_PATH = "vosk-model-small-hi-0.22"
@@ -18,30 +19,27 @@ rec = vosk.KaldiRecognizer(model, samplerate)
 keep_listening = False
 final_text = ""
 
+# Audio queue
+q = queue.Queue()
+
+# Audio callback function for sounddevice
+def callback(indata, frames, time, status):
+    if status:
+        print(status, file=sys.stderr)
+    q.put(bytes(indata))
+
 # Audio thread function
 def listen_audio():
     global keep_listening, final_text
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=1,
-                    rate=samplerate,
-                    input=True,
-                    frames_per_buffer=chunk_size)
-
-    stream.start_stream()
-
-    while keep_listening:
-        data = stream.read(chunk_size, exception_on_overflow=False)
-        if rec.AcceptWaveform(data):
-            result = json.loads(rec.Result())
-            if result.get("text"):
-                final_text += result["text"] + " "
-        else:
-            _ = json.loads(rec.PartialResult())
-
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
+    with sd.InputStream(callback=callback, channels=1, samplerate=samplerate, dtype='int16'):
+        while keep_listening:
+            data = q.get()
+            if rec.AcceptWaveform(data):
+                result = json.loads(rec.Result())
+                if result.get("text"):
+                    final_text += result["text"] + " "
+            else:
+                _ = json.loads(rec.PartialResult())
 
 # Set page config
 st.set_page_config(page_title="🎤 Speech-En-IND", layout="centered")
@@ -119,7 +117,7 @@ st.markdown("""
 
 # UI Heading
 st.markdown("<h1 style='text-align: center; color: #a5b4fc;'>🎤 Live Speech Recognition</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #94a3b8;'>Using Vosk + Streamlit | English (India)</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94a3b8;'>Using Vosk + Streamlit | Hindi (India)</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 # Session state
