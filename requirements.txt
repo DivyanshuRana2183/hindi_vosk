@@ -287,7 +287,7 @@ py-cpuinfo @ file:///work/perseverance-python-buildout/croot/py-cpuinfo_16988653
 pyarrow @ file:///croot/pyarrow_1721664224170/work/python
 pyasn1 @ file:///Users/ktietz/demo/mc3/conda-bld/pyasn1_1629708007385/work
 pyasn1-modules==0.2.8
-PyAudio==0.2.14
+
 pycodestyle @ file:///croot/pycodestyle_1701910164456/work
 pycosat @ file:///croot/pycosat_1714510623388/work
 pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
@@ -467,4 +467,3 @@ zict @ file:///work/perseverance-python-buildout/croot/zict_1698876364831/work
 zipp @ file:///work/perseverance-python-buildout/croot/zipp_1707367835224/work
 zope.interface @ file:///work/perseverance-python-buildout/croot/zope.interface_1698866533743/work
 zstandard @ file:///croot/zstandard_1728569189425/work
-sounddevice==0.5.2
