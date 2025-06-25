@@ -5,6 +5,7 @@ import threading
 import time
 import sounddevice as sd
 import queue
+import sys
 
 # Path to your vosk model
 VOSK_MODEL_PATH = "vosk-model-small-hi-0.22"
@@ -84,7 +85,8 @@ st.markdown("""
         border: 1px solid #334155;
         min-height: 250px;
         color: #fff;
-        margin-bottom: 40px;    box-shadow: 0px 4px 16px 10px #a5a5a5;
+        margin-bottom: 40px;
+        box-shadow: 0px 4px 16px 10px #a5a5a5;
     }
     .btn-row {
         display: flex;
@@ -120,7 +122,7 @@ st.markdown("<h1 style='text-align: center; color: #a5b4fc;'>🎤 Live Speech Re
 st.markdown("<p style='text-align: center; color: #94a3b8;'>Using Vosk + Streamlit | Hindi (India)</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# Session state
+# Session state initialization
 if "is_listening" not in st.session_state:
     st.session_state.is_listening = False
 if "transcript" not in st.session_state:
