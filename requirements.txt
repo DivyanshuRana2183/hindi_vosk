@@ -1,7 +1,5 @@
 streamlit==1.17.0
 vosk==0.3.45
-
-queue==0.1.0
 librosa==0.11.0
 
 
