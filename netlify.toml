@@ -1,2 +1,4 @@
 [build]
+  command = "streamlit run Testing_STT.py"  # Replace Testing_STT.py with your script name
+  publish = "public" 
   environment = { PYTHON_VERSION = "3.9" }
