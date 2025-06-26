@@ -1,7 +1,7 @@
 streamlit==1.17.0
 vosk==0.3.45
 librosa==0.11.0
-
+llvmlite==0.43.0
 
 
 
